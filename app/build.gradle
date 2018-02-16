@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+apply plugin: 'groovyx.android'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "tech.teslex.groovyx"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/services/org.codehaus.groovy.transform.ASTTransformation'
+        exclude 'META-INF/services/org.codehaus.groovy.runtime.ExtensionModule'
+    }
+}
+
+androidGroovy {
+    sourceSets {
+        main {
+            groovy {
+                srcDirs += 'src/main/groovy'
+            }
+        }
+    }
+
+    options {
+        configure(groovyOptions) {
+            javaAnnotationProcessing = true
+            encoding = 'UTF-8'
+//            forkOptions.jvmArgs = ['-noverify']
+        }
+    }
+
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//    compile 'org.codehaus.groovy:groovy:2.4.12:grooid'
+    implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
